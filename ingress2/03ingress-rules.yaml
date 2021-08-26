@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-reglas
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /app1   # indica a la regla que busca. en este caso que la url sea la raiz
+        pathType: Prefix # indica el tipo de búsqueda . En este caso por prefijo en la url
+        backend:
+          service:
+            name: app1
+            port:
+              number: 8080
+      - path: /app2   # indica a la regla que busca. en este caso que la url tenga el prefijo test
+        pathType: Prefix # indica el tipo de búsqueda . En este caso por prefijo en la url
+        #En este caso el servicio final es el mismo pero podría definir otro distinto a donde enviarlo
+        backend:
+          service:
+            name: app2
+            port:
+              number: 8080
